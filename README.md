@@ -1,6 +1,6 @@
 # fyp
 
-A new Flutter project.
+Real Estate Insignia 
 
 ## Getting Started
 

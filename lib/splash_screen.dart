@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:fyp/firebase_services/splash_services.dart';
-
-
+import 'home_screen.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -12,14 +10,17 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  
-  SplashServices splashServices = SplashServices();
-  
   @override
- void initState() {
-    // TODO: implement initState
+  //3 sec wait
+  void initState() {
+    //ToDo: implement initState
+    //pushreplacement to check
     super.initState();
-    splashServices.isLogin(this.context);
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const Wrapper()
+          ));
+    });
   }
 
   @override

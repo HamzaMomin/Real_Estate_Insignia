@@ -29,6 +29,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,6 +40,10 @@ dependencies:
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
   fluttertoast: ^8.1.1
+  firebase_database: ^10.0.4
+
+  
+  
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +70,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
    - assets/Logo.png
+   - assets/Login.png
+   - assets/Select.png
+   - assets/Signup.png
+    
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

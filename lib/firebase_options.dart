@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBVFdUDk-BZVdsFX9fHtrRPmiDMSDkUD1w',
-    appId: '1:999701990661:android:307e1036ce39e0167e3b6c',
+    appId: '1:999701990661:android:db695d49fe38e6487e3b6c',
     messagingSenderId: '999701990661',
     projectId: 'realestateinsignia',
     storageBucket: 'realestateinsignia.appspot.com',
