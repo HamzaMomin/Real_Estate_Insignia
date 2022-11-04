@@ -2,4 +2,4 @@
 
 Real Estate Insignia 
 
-yes
+NO
