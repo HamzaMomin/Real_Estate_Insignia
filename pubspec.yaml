@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.0.3
   fluttertoast: ^8.1.1
   firebase_database: ^10.0.4
+  image_picker: ^0.8.6
 
   
   
@@ -73,6 +74,7 @@ flutter:
    - assets/Login.png
    - assets/Select.png
    - assets/Signup.png
+   
     
    
 

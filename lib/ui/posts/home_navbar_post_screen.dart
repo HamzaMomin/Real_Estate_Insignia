@@ -105,7 +105,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
           selectedItemColor: Colors.black,
           iconSize: 20,
           onTap: _onItemTapped,
-          // elevation: 5
+          // elevation: 5,
+          
         ),
 
         //user ke email display ho ge jo auth mai hai firebase
