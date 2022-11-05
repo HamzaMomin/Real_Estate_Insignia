@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp/ui/posts/posts_screen.dart';
+import 'package:fyp/ui/posts/home_navbar_post_screen.dart';
 
 import '../../home_screen.dart';
 import '../../utils/utils.dart';
@@ -52,19 +52,22 @@ class _VerifyNumberState extends State<VerifyCodeScreen> {
                 setState(() {
                   loading = true;
                 });
-                final credential = PhoneAuthProvider.credential(
+                final credential =  PhoneAuthProvider.credential(
                   //widget . verificationID back screen se aa rehi hai
                   verificationId: widget.verificatioID, 
                   //verifyCode crontroller pr sms aay
-                  smsCode: verifyCode.text.toString()
+                  smsCode: verifyCode.text.toString(),
+                  
                 );
+                
+               
 
                       //try cache firebase exception hai
                       try{
                         await auth.signInWithCredential(credential);
                                 ///jaab auto verifiy ho jaa ga code to next screeen pr lay jaao
                                 ///
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => PostScreen()));
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => NavbarScreen()));
 
                       }catch(e){
                           setState(() {

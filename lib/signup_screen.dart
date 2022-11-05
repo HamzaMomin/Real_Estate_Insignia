@@ -35,7 +35,7 @@ class _SignUp extends State<SignUp> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  //email
+                  //name
                   child: TextField(
                     decoration: InputDecoration(
                       border: OutlineInputBorder(

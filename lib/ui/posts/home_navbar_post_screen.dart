@@ -4,68 +4,116 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/ui/auth/login_firebase.dart';
+import 'package:fyp/ui/posts/post_profile_.dart';
 import 'package:fyp/utils/utils.dart';
 
-class PostScreen extends StatefulWidget {
-  const PostScreen({Key? key}) : super(key: key);
+class NavbarScreen extends StatefulWidget {
+  const NavbarScreen({Key? key}) : super(key: key);
 
   @override
-  State<PostScreen> createState() => _PostScreenState();
+  State<NavbarScreen> createState() => _NavbarScreenState();
 }
 
-class _PostScreenState extends State<PostScreen> {
+class _NavbarScreenState extends State<NavbarScreen> {
   final auth = FirebaseAuth.instance;
 
   final user = FirebaseAuth.instance.currentUser;
-  
-   
+
+  //Naviagtion bar elements
+
+  int _selectedIndex = 0;
+  static const List<Widget> _screens = <Widget>[
+    Text('Home Page',
+        style: TextStyle(
+          fontSize: 15,
+        )),
+    Text('Search Page',
+        style: TextStyle(
+          fontSize: 15,
+        )),
+    UserProfileScreen(),
+  ];
+
+  //on tap jaab press kro to
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   // final ref = FirebaseDatabase.instance.ref('REI_DATABASE');
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          // backgroundColor: Colors.blueGrey,
-          appBar: AppBar(
-            title: Text('User Profile Screen'),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    //sign out profile
-                    auth.signOut().then((value) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginFirebase()));
-                    }).onError((error, stackTrace) {
-                      Utils().toastMessage(error.toString());
-                    });
-                  },
-                  icon: Icon(Icons.logout_outlined)),
-              SizedBox(
-                width: 10,
-              )
-            ],
-          ),
-         
-         body: Column(children: [
+        // backgroundColor: Colors.blueGrey,
+        // appBar: AppBar(
+        //   title: Text('Profile'),
+        //     automaticallyImplyLeading: false,
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () {
+        //           //sign out profile
+        //           auth.signOut().then((value) {
+        //             Navigator.push(
+        //                 context,
+        //                 MaterialPageRoute(
+        //                     builder: (context) => const LoginFirebase()));
+        //           }).onError((error, stackTrace) {
+        //             Utils().toastMessage(error.toString());
+        //           });
+        //         },
+        //         icon: Icon(Icons.logout_outlined)),
+        //     SizedBox(
+        //       width: 10,
+        //     )
+        //   ],
+        // ),
 
-            
-              
-              Text('Email: ${FirebaseAuth.instance.currentUser!.email}'),
-            
-             
+        body: Center(
+          child: _screens.elementAt(_selectedIndex),
+        ),
 
-      
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                color: Colors.black,
+              ),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.upload,
+                color: Colors.black,
+              ),
+              label: 'Upload',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
+              label: 'Profile',
+            ),
+          ],
+          type: BottomNavigationBarType.shifting,
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.black,
+          iconSize: 20,
+          onTap: _onItemTapped,
+          // elevation: 5
+        ),
 
-         ]),
-         
-         
+        //user ke email display ho ge jo auth mai hai firebase
+        // Text('Email: ${FirebaseAuth.instance.currentUser!.email}'),
       ),
     );
   }
 }
-
 
 // Column(
 //             children: [

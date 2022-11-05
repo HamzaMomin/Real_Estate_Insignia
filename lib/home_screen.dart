@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/ui/posts/posts_screen.dart';
+import 'package:fyp/ui/posts/home_navbar_post_screen.dart';
 import 'Image_deatails.dart';
 import 'camera_screen.dart';
 import 'login_or_signup.dart';
@@ -129,7 +129,7 @@ class _WrapperState extends State<Wrapper> {
     const HomeScreen(),
     const CameraScreen(),
     const SelectOne(),  // login / signup
-    const PostScreen()
+    const NavbarScreen()
   ];
   //funtion to change screen
   void onButtonTap(int index) {
