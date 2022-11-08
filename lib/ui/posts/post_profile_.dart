@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/utils/utils.dart';
 import 'package:fyp/widgets/round_button.dart';
@@ -27,10 +28,11 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   //storage ref hai
   firebase_storage.FirebaseStorage storage =
-    firebase_storage.FirebaseStorage.instance;
+      firebase_storage.FirebaseStorage.instance;
 
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref('Post');
 
+  //future function to pick single image
   Future getImageGallery() async {
     //pickedFile user ke file hai
     final pickedFile =
@@ -71,8 +73,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                       //if image is not equal to null so humray pass image hai
                       child: _Image != null
-                          ? Image.file(_Image!.absolute)
-                          : Center(child: Icon(Icons.image)),
+                          ? Image.file(
+                              _Image!.absolute,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.fill,
+                            )
+                          : Icon(Icons.camera_alt_outlined),
                     ),
                   )),
             ),
@@ -86,6 +93,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   setState(() {
                     loading = true;
                   });
+
                   //ref laya image ka or us ko ka aik folder banya jis ka naam UserProfiePic hai or us mai haar baar image jaab upload ho ge to unique ho ge us ka naam DateTime se lia jaay a //MOMIN
                   firebase_storage.Reference ref =
                       firebase_storage.FirebaseStorage.instance.ref(
@@ -101,15 +109,20 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
                     databaseRef.child('UserProfile').set({
                       //haar baar unique ids ho gee
-                      'id': DateTime.now().millisecondsSinceEpoch.toString(),
-                      'title': newUrl.toString()
+                      'id' : DateTime.now().millisecondsSinceEpoch.toString(),
+                      'Profile id': user!.uid.toString(),
+                      'Image Link': newUrl.toString(),
+                      'User Email': user?.email.toString(),
+                      
+
+
                     }).then((value) {
                       setState(() {
                         loading = false;
                       });
                       Utils().toastMessage('uploaded');
                     }).onError((error, stackTrace) {
-                      print(error.toString());
+                      Utils().toastMessage(error.toString());
                       setState(() {
                         loading = false;
                       });
@@ -129,26 +142,44 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
+
                   'Login as: ${FirebaseAuth.instance.currentUser!.email}',
                   style: TextStyle(fontSize: 20),
+
                 ),
+
+           
+
               ],
             ),
-            SizedBox(height: 50,),
-           
-            IconButton(onPressed: (){
-                auth.signOut().then((value) => {
-
-                     Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const LoginFirebase()
-            )
-            )}).onError((error, stackTrace) => {
-
-         
+            SizedBox(
+              height: 50,
+            ),
             
-            });
-            }, icon: Icon(Icons.logout_outlined))
+         SizedBox(height: 10,),
 
+               Text(
+
+                  'Profile ID: ${FirebaseAuth.instance.currentUser!.uid}',
+                  style: TextStyle(fontSize: 20),
+
+                ),
+
+            //logout
+            IconButton(
+                onPressed: () {
+                  auth
+                      .signOut()
+                      .then((value) => {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const LoginFirebase()))
+                          })
+                      .onError((error, stackTrace) => {});
+                },
+                icon: Icon(Icons.logout_outlined)),
           ],
         ),
       ),
@@ -160,3 +191,4 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 //           'Login as: ${FirebaseAuth.instance.currentUser!.email}',
 //           style: TextStyle(fontSize: 20),
 //         ),
+

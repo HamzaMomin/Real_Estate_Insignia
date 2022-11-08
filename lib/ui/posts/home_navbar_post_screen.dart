@@ -5,7 +5,10 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/ui/auth/login_firebase.dart';
 import 'package:fyp/ui/posts/post_profile_.dart';
+import 'package:fyp/ui/posts/upload_posts_firebase.dart';
 import 'package:fyp/utils/utils.dart';
+
+import 'home_Firebase_post_list.dart';
 
 class NavbarScreen extends StatefulWidget {
   const NavbarScreen({Key? key}) : super(key: key);
@@ -23,15 +26,9 @@ class _NavbarScreenState extends State<NavbarScreen> {
 
   int _selectedIndex = 0;
   static const List<Widget> _screens = <Widget>[
-    Text('Home Page',
-        style: TextStyle(
-          fontSize: 15,
-        )),
-    Text('Search Page',
-        style: TextStyle(
-          fontSize: 15,
-        )),
-    UserProfileScreen(),
+        HomeScreenFirebase(),
+        UploadScreen(),
+        UserProfileScreen(),
   ];
 
   //on tap jaab press kro to
