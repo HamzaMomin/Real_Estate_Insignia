@@ -5,7 +5,6 @@ import 'package:fyp/utils/utils.dart';
 import 'package:fyp/widgets/round_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../posts/post_profile_.dart';
 import 'password_reset.dart';
 class LoginFirebase extends StatefulWidget {
   const LoginFirebase({Key? key}) : super(key: key);

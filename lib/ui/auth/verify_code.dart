@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/ui/posts/home_navbar_post_screen.dart';
 
-import '../../home_screen.dart';
 import '../../utils/utils.dart';
 import '../../widgets/round_button.dart';
 

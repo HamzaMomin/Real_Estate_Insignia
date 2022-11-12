@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -9,6 +10,8 @@ import 'package:fyp/utils/utils.dart';
 import 'package:fyp/widgets/round_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'docu_verification_screen.dart';
 
 class UploadScreen extends StatefulWidget {
   const UploadScreen({Key? key}) : super(key: key);
@@ -26,7 +29,11 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController pDcontroller = TextEditingController();
   TextEditingController descricontroller = TextEditingController();
   TextEditingController socitycontroller = TextEditingController();
-   
+  TextEditingController purposecontroller = TextEditingController();
+  TextEditingController pricecontroller = TextEditingController();
+  TextEditingController sizeplotcontroller = TextEditingController();
+
+
   bool loading = false;
   final postRef = FirebaseDatabase.instance.ref().child('UserApplication');
 
@@ -34,7 +41,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
   //firebase firestore
 
-  // final firestore = FirebaseFirestore.instance.collection('UserApplication');
+  final firestore = FirebaseFirestore.instance.collection('UserApplication');
 
   //storage ref hai
   firebase_storage.FirebaseStorage storage =
@@ -75,13 +82,36 @@ class _UploadScreenState extends State<UploadScreen> {
     });
   }
 
-  var select;
-  final List<String> _noc = <String>[
-    'DHA',
-    'Jinnah Gardern',
-    'Naval Anchorage',
-    'Bahria Town',
-  ];
+  // var select;
+  // final List<String> _noc = <String>[
+  //   'DHA',
+  //   'Jinnah Gardern',
+  //   'Naval Anchorage',
+  //   'Bahria Town',
+  // ];
+
+//firestore mai image save ho serf document verification wali
+
+//  File? _ImageDoc;
+// final pickerDoc = ImagePicker();
+ 
+//   //future function to pick single image
+//   Future imageDoc() async {
+//     //pickedFile user ke file hai
+//     final pickedDoc = await picker.pickImage(source: ImageSource.camera, imageQuality: 100);
+
+//     setState(() {
+//       //agre user ne file pick he nahi ke phir?
+//       if (pickedDoc != null) {
+//         _Image = File(pickedDoc.path);
+//       } else {
+//         print('No Image Picked');
+//       }
+//     });
+//   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +121,7 @@ class _UploadScreenState extends State<UploadScreen> {
           automaticallyImplyLeading: false,
           title: Center(
               child: Text(
-            'Document Verification Form',
+            'Property List Form',
             style: TextStyle(
                 fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
           )),
@@ -102,14 +132,14 @@ class _UploadScreenState extends State<UploadScreen> {
               height: 10,
             ),
             Text(
-              'Please upload allotment letter picture',
+              'Please upload One picture of House or Plot',
               style: TextStyle(color: Colors.red),
             ),
             SizedBox(
               height: 10,
             ),
             Form(
-               key: _formkey,
+              key: _formkey,
               child: Center(
                 child: InkWell(
                   onTap: () {
@@ -207,6 +237,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                       hintText: 'Enter Owner Name',
+                       icon: Icon(Icons.person_outline),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -224,6 +255,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: 'CNIC',
+                       icon: Icon(Icons.pages_rounded),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -235,12 +267,12 @@ class _UploadScreenState extends State<UploadScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                   TextFormField(
-                 
+                  TextFormField(
                     controller: mobilecontroller,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: 'Mobile Number',
+                        icon: Icon(Icons.mobile_friendly),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -250,9 +282,9 @@ class _UploadScreenState extends State<UploadScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
-                  Text('NOC / LOP Approved Housing Societies of Islamabad'),
+                  Text('NOC / LOP Approved Housing Societies of Islamabad' , style: TextStyle(color: Colors.red),),
                   SizedBox(
                     height: 10,
                   ),
@@ -260,10 +292,10 @@ class _UploadScreenState extends State<UploadScreen> {
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: const <Widget>[
                   //   //   DropdownButton(
-                        
+
                   //   //     items: _noc
                   //   //         .map((value) => DropdownMenuItem(
-                              
+
                   //   //               child: Text(
                   //   //                 value,
                   //   //               ),
@@ -280,28 +312,25 @@ class _UploadScreenState extends State<UploadScreen> {
                   //   //   }
                   //   //   return null;
                   //   // };
-                            
+
                   //   //       });
                   //   //     },
                   //   //     value: select,
                   //   //     isExpanded: false,
                   //   //     hint: Text('Choose one Housing Socity'),
-                        
-                  //   //   ),
 
-                    
-                    
-                  
+                  //   //   ),
 
                   //   ],
                   // ),
 
-                   TextFormField(
-                 
+                  TextFormField(
+                    maxLength: 10,
                     controller: socitycontroller,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                       hintText: 'Enter Society Name :',
+                         icon: Icon(Icons.area_chart_outlined),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -314,10 +343,12 @@ class _UploadScreenState extends State<UploadScreen> {
                     height: 20,
                   ),
                   TextFormField(
+                    maxLength: 10,
                     controller: plotcontroller,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
                       hintText: 'Enter Plot Or File Number Series',
+                       icon: Icon(Icons.numbers_outlined),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -326,6 +357,65 @@ class _UploadScreenState extends State<UploadScreen> {
                       return null;
                     },
                   ),
+
+
+                       SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLength: 10,
+                    controller: sizeplotcontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Plot Size : ',
+                      icon: Icon(Icons.landscape_outlined),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Plot Size';
+                      }
+                      return null;
+                    },
+                  ),  
+             
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLength: 4,
+                    controller: purposecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Purpose : Sale / Rent',
+                      icon: Icon(Icons.tab_outlined),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Sale / Rent';
+                      }
+                      return null;
+                    },
+                  ),
+ //pricecontroller
+                 SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLength: 10,
+                    controller: pricecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Price : ',
+                           icon: Icon(Icons.price_change_outlined),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter Price';
+                      }
+                      return null;
+                    },
+                  ),
+
                   SizedBox(
                     height: 20,
                   ),
@@ -335,21 +425,15 @@ class _UploadScreenState extends State<UploadScreen> {
                     keyboardType: TextInputType.text,
                     minLines: 5,
                     maxLines: 10,
-                    
                     decoration: const InputDecoration(
-                      hintText: 'Enter Property Details',
-
-                    
-                labelText: 'Enter Property Details',
-              
-                border: OutlineInputBorder(),
-                labelStyle:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
-                hintStyle:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-              
-                  
-                  
+                      hintText: 'Enter Property Location',
+                      labelText: 'Enter Location',
+                        icon: Icon(Icons.location_city_outlined),
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
+                      hintStyle: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.normal),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -361,27 +445,21 @@ class _UploadScreenState extends State<UploadScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  
-                    TextFormField(
-                      controller: descricontroller,
+
+                  TextFormField(
+                    controller: descricontroller,
                     keyboardType: TextInputType.text,
                     minLines: 5,
                     maxLines: 20,
                     decoration: const InputDecoration(
                       hintText: 'Enter  Description',
-
-                             
-                labelText: 'Description',
-              
-                border: OutlineInputBorder(),
-                labelStyle:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
-                hintStyle:
-                    TextStyle(color: Colors.grey, fontWeight: FontWeight.normal),
-              
-
-
-
+                      labelText: 'Description',
+                        icon: Icon(Icons.description),
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.normal),
+                      hintStyle: TextStyle(
+                          color: Colors.grey, fontWeight: FontWeight.normal),
                     ),
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -390,47 +468,52 @@ class _UploadScreenState extends State<UploadScreen> {
                       return null;
                     },
                   ),
-
                 ],
               ),
+            ),
+
+         const   SizedBox(
+              height: 10,
+            ),
+              
+
+              Text('Only Verified Properties will be Listed' , style: TextStyle(color: Colors.red),),
+
+
+            const SizedBox(
+              height: 15,
             ),
 
             RoundButton(
                 title: 'Upload',
                 loading: loading,
                 onTap: () async {
-                  
-                
-                          if(_formkey.currentState!.validate())
-                          {
-                             setState(() {
-                               loading = true;
-                             });
-                          }
+                  if (_formkey.currentState!.validate())
+                   {
+                    setState(() {
+                      loading = true;
+                        
+                    });
+                  }
 
-                     
-                            //user ids are unique
 
-                      //storage mai imaes aay ge
+
+
+
+                  //user ids are unique
+
+                  //storage mai imaes aay ge
                   //    firebase_storage.Reference ref =
                   //    firebase_storage.FirebaseStorage.instance.ref(
                   //     '/allotmenletter/${DateTime.now().millisecondsSinceEpoch}');
                   //  UploadTask uploadTask = ref.putFile(_Image!.absolute);
                   //  await Future.value(uploadTask);
-                  //  var newUrl = await ref.getDownloadURL();
+                  
+                  //  var DocuImage = await ref.getDownloadURL();
 
                   //     firestore.doc().set({
-                  //         'Image Url': newUrl.toString(),
-                  //         'Image id': DateTime.now().millisecondsSinceEpoch.toString(),
-                  //         'Name': namecontroller.text.toString(),
-                  //         'CNIC': cniccontroller.text.toString(),
-                  //         'User Email': user!.email.toString(),
-                  //         'User ID': user?.uid.toString(),
-                  //         'PLot File Number': plotcontroller.text.toString(),
-                  //         'Mobile Number' : mobilecontroller.text.toString(),
-                  //         'Property details': pDcontroller.text.toString(),
-                  //         'Description': descricontroller.text.toString(),
-                  //         'Society Name' : socitycontroller.text.toString(),
+                  //         'DocuImage': DocuImage.toString(),
+                         
                   //     }).then((value) {
                   //            setState(() {
                   //     loading = false;
@@ -462,17 +545,20 @@ class _UploadScreenState extends State<UploadScreen> {
                           //real time mai jaa k save ho ga
 
                           'Image Url': newUrl.toString(),
-                          'Image id': DateTime.now().millisecondsSinceEpoch.toString(),
+                          'Image id':
+                              DateTime.now().millisecondsSinceEpoch.toString(),
                           'User Name': namecontroller.text.toString(),
                           'CNIC': cniccontroller.text.toString(),
                           'User Email': user!.email.toString(),
                           'User ID': user.uid.toString(),
                           'PLot File Number': plotcontroller.text.toString(),
-                          'Mobile Number' : mobilecontroller.text.toString(),
+                          'Mobile Number': mobilecontroller.text.toString(),
                           'Property details': pDcontroller.text.toString(),
                           'Description': descricontroller.text.toString(),
-                          'Society Name' : socitycontroller.text.toString(),
-
+                          'Society Name': socitycontroller.text.toString(),
+                          'Purpose': purposecontroller.text.toString(),
+                          'Price': pricecontroller.text.toString(),
+                          'Plot Size': sizeplotcontroller.text.toString(),
 
                         })
                         .then((value) => {
@@ -494,15 +580,27 @@ class _UploadScreenState extends State<UploadScreen> {
                     Utils().toastMessage(e.toString());
                   }
 
-                 
+                      
+                      //jaab submission ho jaay taab next screen mai jaay likn wait kry phely
+
+
+ Timer(const Duration(seconds: 3), () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const DocuVerfiScreen()));
+      });
+
+
+
+
+
 
                 }),
-                
-                 SizedBox(height: 10,),
-          ]
-          ),
-        )
-        );
+
+            SizedBox(
+              height: 10,
+            ),
+          ]),
+        ));
   }
 }
 

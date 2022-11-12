@@ -45,29 +45,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
 
-           Expanded(
-                child: FirebaseAnimatedList(
-                query: postRef.child('UserVeriRequest') ,
-                itemBuilder:  (context, snapshot, animation, index) 
-                {
-          
-              return Column(
-                children: [
-                 
-                   
-                   
-
-                     Text(snapshot.child('User Name').value.toString()),
-
-                      Text(snapshot.child('CNIC').value.toString()),
-                     
-
-                ]
-              );
-
-                }),
-                ),
-
+        
 
 
           const SizedBox(

@@ -14,8 +14,6 @@ class HomeScreenFirebase extends StatefulWidget {
   State<HomeScreenFirebase> createState() => _HomeScreenState();
 }
 
-
-
 bool loading = false;
 final postRef = FirebaseDatabase.instance.ref().child('UserApplication');
 
@@ -25,49 +23,87 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.red.shade50,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.deepPurpleAccent,
-        //   automaticallyImplyLeading: false,
-        //   title: const Center(
-        //       child: Text(
-        //     'Submited Applications',
-        //     style: TextStyle(
-        //         fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
-        //   )),
-        // ),
-        body: Column(
-          children: [
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          automaticallyImplyLeading: false,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: Column(
+            children: [
               Expanded(
                 child: FirebaseAnimatedList(
-                query: postRef.child('UserVeriRequest') ,
-                itemBuilder:  (context, snapshot, animation, index) 
-                {
-          
-              return Column(
-                children: [
-                  FadeInImage.assetNetwork(
-                    placeholder: 'assets/Logo.png', 
-                    image: snapshot.child('Image Url').value.toString()
-                    ),
-                   Text(snapshot.child('Image id').value.toString()),
-                    Text(snapshot.child('Name').value.toString()),
-                     Text(snapshot.child('PLot File Number').value.toString()),
-                     
-
-                ]
-              );
-
-                }),
-                ),
-
-                
-                
-                
-
-          ],
+                    query: postRef.child('UserVeriRequest'),
+                    itemBuilder: (context, snapshot, animation, index) {
+                      return Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: FadeInImage.assetNetwork(
+                                  fit: BoxFit.fill,
+                                  height: 350,
+                                  width: 350,
+                                  placeholder: 'assets/Logo.png',
+                                  image: snapshot
+                                      .child('Image Url')
+                                      .value
+                                      .toString()),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: 50,
+                                  width: 120,
+                                  color: Colors.deepPurpleAccent,
+                                  child: Center(
+                                      child: Text(snapshot
+                                          .child('User Name')
+                                          .value
+                                          .toString())),
+                                ),
+                                SizedBox(width: 90),
+                                Container(
+                                  height: 50,
+                                  width: 120,
+                                  color: Colors.red,
+                                  child: Center(
+                                      child: Text(snapshot
+                                          .child('Mobile Number')
+                                          .value
+                                          .toString(), )),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('Society Name : '),
+                                Text(snapshot
+                                    .child('Society Name')
+                                    .value
+                                    .toString()),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ]);
+                    }),
+              ),
+            ],
+          ),
         ),
-
-
       ),
     );
   }
