@@ -117,7 +117,7 @@ class _UploadScreenState extends State<UploadScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepPurpleAccent,
+          backgroundColor: Colors.deepPurple,
           automaticallyImplyLeading: false,
           title: Center(
               child: Text(

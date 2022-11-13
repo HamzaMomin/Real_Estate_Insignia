@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fyp/screen/delaer_screen.dart';
 import 'package:fyp/ui/auth/signup_firebase.dart';
 import 'package:fyp/ui/posts/home_navbar_post_screen.dart';
 import 'package:fyp/utils/utils.dart';
@@ -22,6 +23,7 @@ class _LoginFirebaseState extends State<LoginFirebase> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
    
+ 
 
   //dispose function
   @override
@@ -31,6 +33,7 @@ class _LoginFirebaseState extends State<LoginFirebase> {
     emailController.dispose();
     passwordController.dispose();
   }
+  
 
   //login function
   void login()
@@ -39,9 +42,9 @@ class _LoginFirebaseState extends State<LoginFirebase> {
        setState(() {
          loading = true;
        });
-      _auth.signInWithEmailAndPassword(
-        email: emailController.text.toString(),
-         password: passwordController.text.toString()).then((value){
+      
+      _auth.signInWithEmailAndPassword(email: emailController.text.toString(),
+      password: passwordController.text.toString()).then((value){
 
             //display kry ga kon sa user login hai
             Utils().toastMessage(value.user!.email.toString());
@@ -61,6 +64,8 @@ class _LoginFirebaseState extends State<LoginFirebase> {
           loading = false;
              });
         });
+
+      
 
   }
 
