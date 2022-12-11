@@ -42,7 +42,9 @@ dependencies:
   fluttertoast: ^8.1.1
   firebase_database: ^10.0.4
   image_picker: ^0.8.6
-  
+  url_launcher: ^6.1.7
+  flutter_phone_direct_caller: ^2.1.1
+
 
   
   

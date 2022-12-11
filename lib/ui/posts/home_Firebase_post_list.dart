@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -6,6 +8,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+
 
 class HomeScreenFirebase extends StatefulWidget {
   const HomeScreenFirebase({Key? key}) : super(key: key);
@@ -28,11 +34,11 @@ final List<String> _noc = <String>[
 class _HomeScreenState extends State<HomeScreenFirebase> {
   TextEditingController searchcontroller = TextEditingController();
   TextEditingController searchcontroller2 = TextEditingController();
-
+  TextEditingController mobilecontroller = TextEditingController();
   String search = "";
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -108,9 +114,8 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                   controller: searchcontroller2,
                   keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
-                    hintText: 'Search by Plot Size',
-                    icon: Icon(Icons.send_and_archive)
-                  ),
+                      hintText: 'Search by Plot Size',
+                      icon: Icon(Icons.send_and_archive)),
                   onChanged: (String value) {
                     search = value;
                   },
@@ -186,7 +191,10 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                       width: 120,
                                       color: Colors.deepPurple,
                                       child: Center(
-                                          child: Text(
+
+                                          // ignore: deprecated_member_use
+                                          child: InkWell(
+                                           child: Text(
                                               snapshot
                                                   .child('Mobile Number')
                                                   .value
@@ -194,7 +202,25 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                               style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.white,
-                                              ))),
+                                              )
+                                              ),
+                                          onTap: (){
+                                              launch('tel:' + snapshot.child('Mobile Number').value.toString());
+                                          }
+                                                    // '${FirebaseAuth.instance.currentUser?.phoneNumber}'
+
+                                          )
+                                          // child: Text(
+                                          //     snapshot
+                                          //         .child('Mobile Number')
+                                          //         .value
+                                          //         .toString(),
+                                          //     style: TextStyle(
+                                          //       fontSize: 18,
+                                          //       color: Colors.white,
+                                          //     )
+                                          //     )
+                                              ),
                                     ),
                                   ),
                                 ],
@@ -269,10 +295,12 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                               const Text('Email : ',
                                   style:
                                       TextStyle(fontWeight: FontWeight.w700)),
-                              Text(snapshot
-                                  .child('User Email')
-                                  .value
-                                  .toString()),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              Text(
+                                  snapshot.child('User Email').value.toString(),
+                                  style: TextStyle(color: Colors.blueGrey)),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -523,6 +551,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                     ),
                                   ),
                                   SizedBox(width: 90),
+                                 
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Container(
