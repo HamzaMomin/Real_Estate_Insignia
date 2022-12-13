@@ -32,6 +32,7 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController purposecontroller = TextEditingController();
   TextEditingController pricecontroller = TextEditingController();
   TextEditingController sizeplotcontroller = TextEditingController();
+  // TextEditingController dealertcontroller = TextEditingController();
 
 
   bool loading = false;
@@ -529,9 +530,12 @@ class _UploadScreenState extends State<UploadScreen> {
 
                   //firebase Real Time Data Base
                   try {
+
+                      int id = DateTime.now().millisecondsSinceEpoch;
+
                     firebase_storage.Reference ref =
                         firebase_storage.FirebaseStorage.instance.ref(
-                            '/UserReq/${DateTime.now().millisecondsSinceEpoch}');
+                            '/UserReq/${id}');
 
                     UploadTask uploadTask = ref.putFile(_Image!.absolute);
                     await Future.value(uploadTask);
@@ -540,13 +544,13 @@ class _UploadScreenState extends State<UploadScreen> {
                     final User? user = auth.currentUser;
                     postRef
                         .child(
-                            'UserVeriRequest/${DateTime.now().millisecondsSinceEpoch}')
+                            'UserVeriRequest/${id}')
                         .set({
                           //real time mai jaa k save ho ga
 
                           'Image Url': newUrl.toString(),
                           'Image id':
-                              DateTime.now().millisecondsSinceEpoch.toString(),
+                              id,
                           'User Name': namecontroller.text.toString(),
                           'CNIC': cniccontroller.text.toString(),
                           'User Email': user!.email.toString(),
@@ -559,6 +563,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           'Purpose': purposecontroller.text.toString(),
                           'Price': pricecontroller.text.toString(),
                           'Plot Size': sizeplotcontroller.text.toString(),
+                          // 'DealerVeri': dealertcontroller.text.toString(),
 
                         })
                         .then((value) => {

@@ -130,6 +130,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
             children: [
               Expanded(
                 child: FirebaseAnimatedList(
+                 
                     query: postRef.child('UserVeriRequest'),
                     itemBuilder: (context, snapshot, animation, index) {
                       String tempvalue =
@@ -317,9 +318,9 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                 height: 20,
                               ),
 
-                              const Text('Dealer Verification Status : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
+                              // const Text('Dealer Verification Status : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
 
                               const SizedBox(
                                 height: 40,
@@ -489,9 +490,9 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                 height: 20,
                               ),
 
-                              const Text('Dealer Verification Status : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
+                              // const Text('Dealer Verification Status : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
 
                               const SizedBox(
                                 height: 40,
@@ -662,9 +663,9 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                 height: 20,
                               ),
 
-                              const Text('Dealer Verification Status : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
+                              // const Text('Dealer Verification Status : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
 
                               const SizedBox(
                                 height: 40,
