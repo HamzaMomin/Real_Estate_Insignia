@@ -11,8 +11,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-
-
 class HomeScreenFirebase extends StatefulWidget {
   const HomeScreenFirebase({Key? key}) : super(key: key);
 
@@ -38,7 +36,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
   String search = "";
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  
+  final firestore = FirebaseFirestore.instance.collection('Veri').snapshots();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -128,9 +126,13 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: Column(
             children: [
+
+              
+
+                            
+                
               Expanded(
                 child: FirebaseAnimatedList(
-                 
                     query: postRef.child('UserVeriRequest'),
                     itemBuilder: (context, snapshot, animation, index) {
                       String tempvalue =
@@ -195,22 +197,25 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
 
                                           // ignore: deprecated_member_use
                                           child: InkWell(
-                                           child: Text(
-                                              snapshot
-                                                  .child('Mobile Number')
-                                                  .value
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.white,
-                                              )
-                                              ),
-                                          onTap: (){
-                                              launch('tel:' + snapshot.child('Mobile Number').value.toString());
-                                          }
-                                                    // '${FirebaseAuth.instance.currentUser?.phoneNumber}'
+                                              child: Text(
+                                                  snapshot
+                                                      .child('Mobile Number')
+                                                      .value
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.white,
+                                                  )),
+                                              onTap: () {
+                                                launch('tel:' +
+                                                    snapshot
+                                                        .child('Mobile Number')
+                                                        .value
+                                                        .toString());
+                                              }
+                                              // '${FirebaseAuth.instance.currentUser?.phoneNumber}'
 
-                                          )
+                                              )
                                           // child: Text(
                                           //     snapshot
                                           //         .child('Mobile Number')
@@ -221,7 +226,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                           //       color: Colors.white,
                                           //     )
                                           //     )
-                                              ),
+                                          ),
                                     ),
                                   ),
                                 ],
@@ -313,10 +318,25 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                   .value
                                   .toString()),
 
-                              // ignore: dead_code
-                              const SizedBox(
-                                height: 20,
+                              SizedBox(
+                                height: 10,
                               ),
+
+                              Text(
+                                'User ID: ',
+                                style: TextStyle(color: Colors.black),
+                              ),
+
+                              Text(
+                                snapshot.child('User ID').value.toString(),
+                                style: TextStyle(color: Colors.red),
+                              ),
+
+                              SizedBox(
+                                height: 10,
+                              ),
+
+                              // ignore: dead_code
 
                               // const Text('Dealer Verification Status : ',
                               //     style:
@@ -360,6 +380,9 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
+
+                                     
+
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Container(
@@ -380,6 +403,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                     ),
                                   ),
                                   SizedBox(width: 90),
+
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Container(
@@ -407,6 +431,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  
                                   Text(
                                     'Society Name : ',
                                     style:
@@ -484,6 +509,21 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                   .child('Description')
                                   .value
                                   .toString()),
+                              SizedBox(
+                                height: 10,
+                              ),
+
+                              Text(
+                                'User ID: ',
+                                style: TextStyle(color: Colors.black),
+                              ),
+
+                              Text(
+                                snapshot.child('User ID').value.toString(),
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              
+                              
 
                               // ignore: dead_code
                               const SizedBox(
@@ -552,7 +592,6 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                     ),
                                   ),
                                   SizedBox(width: 90),
-                                 
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Container(
@@ -666,7 +705,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                               // const Text('Dealer Verification Status : ',
                               //     style:
                               //         TextStyle(fontWeight: FontWeight.w700)),
-
+                             
                               const SizedBox(
                                 height: 40,
                               ),

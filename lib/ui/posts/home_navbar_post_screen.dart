@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fyp/ui/auth/login_firebase.dart';
 import 'package:fyp/ui/posts/post_profile_.dart';
 import 'package:fyp/ui/posts/upload_posts_firebase.dart';
+import 'package:fyp/ui/posts/verification%20_screen.dart';
 import 'package:fyp/utils/utils.dart';
 
 import 'home_Firebase_post_list.dart';
@@ -27,6 +28,7 @@ class _NavbarScreenState extends State<NavbarScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _screens = <Widget>[
         HomeScreenFirebase(),
+        // VeriScreen(),
         UploadScreen(),
         UserProfileScreen(),
   ];
@@ -82,6 +84,13 @@ class _NavbarScreenState extends State<NavbarScreen> {
               ),
               label: 'Home',
             ),
+            //  BottomNavigationBarItem(
+            //   icon: Icon(
+            //     Icons.message_outlined,
+            //     color: Colors.black,
+            //   ),
+            //   label: 'Verification',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.upload,
