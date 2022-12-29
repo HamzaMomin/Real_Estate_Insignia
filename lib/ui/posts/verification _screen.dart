@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp/widgets/round_button.dart';
 
 class VeriScreen extends StatefulWidget {
   const VeriScreen({Key? key}) : super(key: key);
@@ -19,11 +20,11 @@ class _VeriScreenState extends State<VeriScreen> {
   //firebase firestore
 
   final firestore = FirebaseFirestore.instance.collection('Veri').snapshots();
-
+  final _formkey = GlobalKey<FormState>();
 
   final FirebaseAuth auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser;
-  
+   TextEditingController namecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -43,36 +44,35 @@ class _VeriScreenState extends State<VeriScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+                TextFormField(
+                    controller: namecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Owner Name',
+                      icon: Icon(Icons.person_outline),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]').hasMatch(value)) {
+                        return 'Enter Correct Owner Name';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+              SizedBox(height: 50,),
 
-            StreamBuilder<QuerySnapshot>(
-                stream: firestore,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting)
-                    return CircularProgressIndicator();
-
-                  if (snapshot.hasError) return Text('Connection Error!!');
-
-                  return Expanded(
-                      child: ListView.builder(
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              subtitle: Text('User Property :'),
-                              title: Center(
-                                  child: Text(
-                                snapshot.data!.docs[index]['Message']
-                                    .toString(),
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              )
-                              ),
-                             
-                            );
-                          }));
-                },
-              ),
-
+                 RoundButton(
+                title: 'Upload',
+                loading: loading,
+                onTap: () async {
+                  if (_formkey.currentState!.validate()) {
+                    setState(() {
+                      loading = true;
+                    });
+                  }
+                }
+                 )
         ]),
 
 

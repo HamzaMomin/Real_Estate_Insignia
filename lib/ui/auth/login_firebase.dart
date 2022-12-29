@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fyp/screen/delaer_screen.dart';
 import 'package:fyp/ui/auth/signup_firebase.dart';
 import 'package:fyp/ui/posts/home_navbar_post_screen.dart';
 import 'package:fyp/utils/utils.dart';
