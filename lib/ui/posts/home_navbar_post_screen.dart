@@ -5,6 +5,7 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp/ui/auth/login_firebase.dart';
 import 'package:fyp/ui/posts/post_profile_.dart';
+import 'package:fyp/ui/posts/upload_post_withoutImage_firebase.dart';
 import 'package:fyp/ui/posts/upload_posts_firebase.dart';
 import 'package:fyp/ui/posts/verification%20_screen.dart';
 import 'package:fyp/utils/utils.dart';
@@ -29,7 +30,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
   static const List<Widget> _screens = <Widget>[
         HomeScreenFirebase(),
         // VeriScreen(),
-        UploadScreen(),
+        // UploadScreen(),
+        Form_No_image(),
         UserProfileScreen(),
   ];
 

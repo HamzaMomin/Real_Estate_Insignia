@@ -11,7 +11,6 @@ import 'package:fyp/utils/utils.dart';
 import 'package:fyp/widgets/round_button.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:form_field_validator/form_field_validator.dart';
 import 'docu_verification_screen.dart';
 
 class UploadScreen extends StatefulWidget {
@@ -34,6 +33,13 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController pricecontroller = TextEditingController();
   TextEditingController sizeplotcontroller = TextEditingController();
   // TextEditingController dealertcontroller = TextEditingController();
+
+@override
+
+  void initState() {
+    super.initState();
+    namecontroller = TextEditingController(text: 'User Name');
+  }
 
   bool loading = false;
   final postRef = FirebaseDatabase.instance.ref().child('UserApplication');
@@ -117,10 +123,10 @@ class _UploadScreenState extends State<UploadScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurple,
-          automaticallyImplyLeading: false,
+          automaticallyImplyLeading: true,
           title: Center(
               child: Text(
-            'Property List Form',
+            'Property List Form Step 2',
             style: TextStyle(
                 fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
           )),
@@ -231,27 +237,23 @@ class _UploadScreenState extends State<UploadScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    controller: namecontroller,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter Owner Name',
-                      icon: Icon(Icons.person_outline),
-                    ),
-                    
-                    validator: MultiValidator([
-                      RequiredValidator(errorText: 'Required'),
-                      PatternValidator(r'^[a-zA-z]+([\s][a-zA-Z]+)*$', errorText: 'Enter Owner Name')
-                    ]),
-                    // validator: (value) {
-                    //   if (value!.isEmpty ||
-                    //       !RegExp(r'[!@#<>?":_`~;[\]\\|=+)(*&^%0-9-]').hasMatch(value)) {
-                    //     return 'Enter Correct Owner Name';
-                    //   } else {
-                    //     return null;
-                    //   }
-                    // },
-                  ),
+                  // TextFormField(
+                  //   controller: namecontroller,
+                  //   keyboardType: TextInputType.text,
+                  //   decoration: const InputDecoration(
+                  //     hintText: 'Enter Owner Name',
+                  //     icon: Icon(Icons.person_outline),
+                  //   ),
+                  //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
+                  //   validator: (value) {
+                  //     if (value!.isEmpty ||
+                  //         !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                  //       return 'Enter Correct Owner Name';
+                  //     } else {
+                  //       return null;
+                  //     }
+                  //   },
+                  // ),
                   // SizedBox(
                   //   height: 20,
                   // ),
@@ -279,23 +281,24 @@ class _UploadScreenState extends State<UploadScreen> {
                   SizedBox(
                     height: 10,
                   ),
-                  TextFormField(
-                    controller: mobilecontroller,
-                    keyboardType: TextInputType.number,
-                    maxLength: 11,
-                    decoration: const InputDecoration(
-                      hintText: 'Mobile Number',
-                      icon: Icon(Icons.mobile_friendly),
-                    ),
-                    validator: (value) {
-                      if (value!.isEmpty ||
-                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                        return 'Enter Mobile Number';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
+                  // TextFormField(
+                  //   controller: mobilecontroller,
+                  //   keyboardType: TextInputType.number,
+                  //   maxLength: 11,
+                  //   decoration: const InputDecoration(
+                  //     hintText: 'Mobile Number',
+                  //     icon: Icon(Icons.mobile_friendly),
+                  //   ),
+                  //    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
+                  //   validator: (value) {
+                  //     if (value!.isEmpty ||
+                  //         !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                  //       return 'Enter Mobile Number';
+                  //     } else {
+                  //       return null;
+                  //     }
+                  //   },
+                  // ),
                   SizedBox(
                     height: 15,
                   ),
@@ -309,35 +312,35 @@ class _UploadScreenState extends State<UploadScreen> {
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: const <Widget>[
-                  //   //   DropdownButton(
+                  //     DropdownButton(
 
-                  //   //     items: _noc
-                  //   //         .map((value) => DropdownMenuItem(
+                  //       items: _noc
+                  //           .map((value) => DropdownMenuItem(
 
-                  //   //               child: Text(
-                  //   //                 value,
-                  //   //               ),
-                  //   //               value: value,
-                  //   //             )
-                  //   //             )
-                  //   //         .toList(),
-                  //   //     onChanged: (selectnoctype) {
-                  //   //       setState(() {
-                  //   //         select = selectnoctype;
-                  //   //         validator: (value) {
-                  //   //   if (value!.isEmpty) {
-                  //   //     return 'Choose Options';
-                  //   //   }
-                  //   //   return null;
-                  //   // };
+                  //                 child: Text(
+                  //                   value,
+                  //                 ),
+                  //                 value: value,
+                  //               )
+                  //               )
+                  //           .toList(),
+                  //       onChanged: (selectnoctype) {
+                  //         setState(() {
+                  //           select = selectnoctype;
+                  //           validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return 'Choose Options';
+                  //     }
+                  //     return null;
+                  //   };
 
-                  //   //       });
-                  //   //     },
-                  //   //     value: select,
-                  //   //     isExpanded: false,
-                  //   //     hint: Text('Choose one Housing Socity'),
+                  //         });
+                  //       },
+                  //       value: select,
+                  //       isExpanded: false,
+                  //       hint: Text('Choose one Housing Socity'),
 
-                  //   //   ),
+                  //     ),
 
                   //   ],
                   // ),
@@ -391,11 +394,14 @@ class _UploadScreenState extends State<UploadScreen> {
                       hintText: 'Plot Size : ',
                       icon: Icon(Icons.landscape_outlined),
                     ),
+                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
                     validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Plot Size';
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Enter Mobile Number';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                   ),
 
@@ -410,11 +416,14 @@ class _UploadScreenState extends State<UploadScreen> {
                       hintText: 'Purpose : Sale / Rent',
                       icon: Icon(Icons.tab_outlined),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Sale / Rent';
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
+                   validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return 'Enter Mobile Number';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                   ),
                   //pricecontroller
@@ -426,14 +435,17 @@ class _UploadScreenState extends State<UploadScreen> {
                     controller: pricecontroller,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: 'Price : ',
+                      hintText: 'Price  : ',
                       icon: Icon(Icons.price_change_outlined),
                     ),
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
                         return 'Enter Price';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                   ),
 
@@ -482,11 +494,14 @@ class _UploadScreenState extends State<UploadScreen> {
                       hintStyle: TextStyle(
                           color: Colors.grey, fontWeight: FontWeight.normal),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter  Description';
+                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
+                     validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return 'Enter Price';
+                      } else {
+                        return null;
                       }
-                      return null;
                     },
                   ),
                 ],
@@ -557,7 +572,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
                     final User? user = auth.currentUser;
                     postRef
-                        .child('UserVeriRequest/${id}')
+                        .child(user!.uid.toString())
                         .set({
                           //real time mai jaa k save ho ga
 
@@ -565,7 +580,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           'Image id': id,
                           'User Name': namecontroller.text.toString(),
                           // 'CNIC': cniccontroller.text.toString(),
-                          'User Email': user!.email.toString(),
+                          'User Email': user.email.toString(),
                           'User ID': user.uid.toString(),
                           // 'PLot File Number': plotcontroller.text.toString(),
                           'Mobile Number': mobilecontroller.text.toString(),
