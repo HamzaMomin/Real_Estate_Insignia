@@ -22,7 +22,7 @@ DatabaseReference databaseRef = FirebaseDatabase.instance.ref('Post');
 
 //firebase firestore
 
-final firestore = FirebaseFirestore.instance.collection('UserApplication');
+final firestore = FirebaseFirestore.instance.collection('Property');
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 final user = FirebaseAuth.instance.currentUser;
@@ -34,8 +34,13 @@ TextEditingController namecontroller = TextEditingController();
 TextEditingController cniccontroller = TextEditingController();
 TextEditingController mobilecontroller = TextEditingController();
 
+
+
+
+
 const List<String> list = <String>['Sale', 'Rent'];
 String dropdownValue = list.first;
+
 
 class _Form_No_imageState extends State<Form_No_image> {
   @override
@@ -70,88 +75,163 @@ class _Form_No_imageState extends State<Form_No_image> {
           body: Padding(
             padding: EdgeInsets.all(25.0),
             child: Center(
-                child: Form(
-              key: _formkey,
-              child: Column(children: <Widget>[
-                SizedBox(
-                  height: 15,
-                ),
-                TextFormField(
-                  autovalidateMode: AutovalidateMode.always,
-                  controller: namecontroller,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Owner Name',
-                    icon: Icon(Icons.person_outline),
+              child: Form(
+                key: _formkey,
+                child: Column(children: <Widget>[
+                  SizedBox(
+                    height: 15,
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))
-                  ],
-                  validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                      return 'Enter Correct Owner Name';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  controller: mobilecontroller,
-                  keyboardType: TextInputType.number,
-                  maxLength: 11,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter Mobile Number',
-                    icon: Icon(Icons.mobile_friendly),
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.always,
+                    controller: namecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Owner Name',
+                      icon: Icon(Icons.person_outline),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return 'Enter Correct Owner Name';
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))
-                  ],
-                  validator: (value) {
-                    if (value!.isEmpty ||
-                        !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
-                            .hasMatch(value)) {
-                      return 'Enter Correct Mobile Number';
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-
-
-                DropdownButton<String>(
-                  value: dropdownValue,
-                  underline: Container(
-                    height: 2,
+                  SizedBox(
+                    height: 10,
                   ),
-                  onChanged: (String? value) {
-                    // This is called when the user selects an item.
-                    setState(() {
-                      dropdownValue = value!;
-                    });
-                  },
-                  items: list.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
+                  TextFormField(
+                    controller: mobilecontroller,
+                    keyboardType: TextInputType.number,
+                    maxLength: 11,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Mobile Number',
+                      icon: Icon(Icons.mobile_friendly),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
+                              .hasMatch(value)) {
+                        return 'Enter Correct Mobile Number';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  // DropdownButton<String>(
+                  //   value: dropdownValue,
+                  //   underline: Container(
+                  //     height: 15,
+                  //   ),
+                  //   onChanged: (String? newValue) {
+                  //     setState(() {
+                  //       dropdownValue = newValue!;
+                  //     });
+                  //   },
+                  //   items: <String>['One', 'Sale', 'Rent']
+                  //       .map<DropdownMenuItem<String>>((String value) {
+                  //     return DropdownMenuItem<String>(
+                  //       value: value,
+                  //       child: Text(value),
+                  //     );
+                  //   }).toList(),
+                  // ),
 
-                
+                  DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.arrow_downward),
+      elevation: 16,
+      style: const TextStyle(color: Colors.deepPurple),
+      underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    ),
 
-              ]),
+                  RoundButton(
+                      title: 'Upload',
+                      loading: loading,
+                      onTap: () async {
+                        setState(() {
+                          loading = true;
+                        });
+
+                        //user ids are unique
+                         int id = DateTime.now().millisecondsSinceEpoch;
+
+                        postRef .child('/UserVeriRequest/${id}')
+                        .set({
+
+                          'Owner Name' : namecontroller.text.toString(),
+                          'Mobile Number': mobilecontroller.text.toString(),
+                          'DropdownValue': dropdownValue.toString(),
+
+
+
+                        }).then((value) {
+                          setState(() {
+                            loading = false;
+                          });
+                          Utils().toastMessage(
+                              'Application Submited to our delar for verification');
+                        }).onError((error, stackTrace) {
+                          Utils().toastMessage(error.toString());
+                          setState(() {
+                            loading = false;
+                          });
+                        });
+                      }),
+                ]),
+              ),
             ),
-            
-            ),
-
           )),
     );
   }
 }
+
+
+ ////Dropdown simple no value stored in firebase
+
+                // DropdownButton<String>(
+                //   value: dropdownValue,
+                //   underline: Container(
+                //     height: 2,
+                //   ),
+                //   onChanged: (String? value) {
+                //     // This is called when the user selects an item.
+                //     setState(() {
+                //       dropdownValue = value!;
+                //     });
+                //   },
+                //   items: list.map<DropdownMenuItem<String>>((String value) {
+                //     return DropdownMenuItem<String>(
+                //       value: value,
+                //       child: Text(value),
+                //     );
+                //   }).toList(),
+
+
+
+                // ),

@@ -438,10 +438,10 @@ class _UploadScreenState extends State<UploadScreen> {
                       hintText: 'Price  : ',
                       icon: Icon(Icons.price_change_outlined),
                     ),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a0-z9]+$'))],
                     validator: (value) {
                       if (value!.isEmpty ||
-                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                          !RegExp(r'^[a0-z9]+$').hasMatch(value)) {
                         return 'Enter Price';
                       } else {
                         return null;
@@ -572,7 +572,7 @@ class _UploadScreenState extends State<UploadScreen> {
 
                     final User? user = auth.currentUser;
                     postRef
-                        .child(user!.uid.toString())
+                        .child('/UserVeriRequest/${id}')
                         .set({
                           //real time mai jaa k save ho ga
 
@@ -580,7 +580,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           'Image id': id,
                           'User Name': namecontroller.text.toString(),
                           // 'CNIC': cniccontroller.text.toString(),
-                          'User Email': user.email.toString(),
+                          'User Email': user!.email.toString(),
                           'User ID': user.uid.toString(),
                           // 'PLot File Number': plotcontroller.text.toString(),
                           'Mobile Number': mobilecontroller.text.toString(),
