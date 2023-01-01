@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700)),
                                   Text(snapshot
-                                      .child('Purpose')
+                                      .child('Sell Rent')
                                       .value
                                       .toString()),
                                 ],
@@ -438,7 +438,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                         TextStyle(fontWeight: FontWeight.w700),
                                   ),
                                   Text(snapshot
-                                      .child('Society Name')
+                                      .child('Housing Societies')
                                       .value
                                       .toString()),
                                   SizedBox(
@@ -448,7 +448,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w700)),
                                   Text(snapshot
-                                      .child('Purpose')
+                                      .child('Sell Rent')
                                       .value
                                       .toString()),
                                 ],

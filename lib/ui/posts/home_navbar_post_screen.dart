@@ -30,8 +30,8 @@ class _NavbarScreenState extends State<NavbarScreen> {
   static const List<Widget> _screens = <Widget>[
         HomeScreenFirebase(),
         // VeriScreen(),
-        // UploadScreen(),
-        Form_No_image(),
+        UploadScreen(),
+        // Form_No_image(),
         UserProfileScreen(),
   ];
 

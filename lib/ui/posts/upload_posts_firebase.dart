@@ -32,16 +32,28 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController purposecontroller = TextEditingController();
   TextEditingController pricecontroller = TextEditingController();
   TextEditingController sizeplotcontroller = TextEditingController();
-  // TextEditingController dealertcontroller = TextEditingController();
 
-@override
+  static const List<String> socities_list = <String>[
+    'NAVAL ANCHORAGE',
+    'BAHRIA TOWN',
+    'DHA',
+    'JINNAH',
+  ];
+  String dropdownValue1 = socities_list.first;
 
-  void initState() {
-    super.initState();
-    namecontroller = TextEditingController(text: 'User Name');
-  }
+  static const List<String> list = <String>['Sell', 'Rent'];
+  String dropdownValue2 = list.first;
+
+  @override
+
+  // void initState() {
+  //   super.initState();
+  //   namecontroller = TextEditingController(text: 'User Name');
+  // }
 
   bool loading = false;
+  bool pressing = false;
+
   final postRef = FirebaseDatabase.instance.ref().child('UserApplication');
 
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref('Post');
@@ -73,7 +85,7 @@ class _UploadScreenState extends State<UploadScreen> {
   File? _Image;
   final picker = ImagePicker();
   final _formkey = GlobalKey<FormState>();
- 
+
   //future function to pick single image
   Future getImageGallery() async {
     //pickedFile user ke file hai
@@ -117,16 +129,16 @@ class _UploadScreenState extends State<UploadScreen> {
 //       }
 //     });
 //   }
-
+  bool _isAcceptTermsAndConditions = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurple,
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: false,
           title: Center(
               child: Text(
-            'Property List Form Step 2',
+            'Property List Form',
             style: TextStyle(
                 fontSize: 15, fontWeight: FontWeight.w700, color: Colors.white),
           )),
@@ -224,7 +236,7 @@ class _UploadScreenState extends State<UploadScreen> {
             ),
             Center(
                 child: Text(
-              'Details',
+              'Property Details',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
             )),
             SizedBox(
@@ -237,78 +249,140 @@ class _UploadScreenState extends State<UploadScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // TextFormField(
-                  //   controller: namecontroller,
-                  //   keyboardType: TextInputType.text,
-                  //   decoration: const InputDecoration(
-                  //     hintText: 'Enter Owner Name',
-                  //     icon: Icon(Icons.person_outline),
-                  //   ),
-                  //   inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
-                  //   validator: (value) {
-                  //     if (value!.isEmpty ||
-                  //         !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                  //       return 'Enter Correct Owner Name';
-                  //     } else {
-                  //       return null;
-                  //     }
-                  //   },
-                  // ),
-                  // SizedBox(
-                  //   height: 20,
-                  // ),
-                  // TextFormField(
-                  //   maxLength: 13,
-                  //   controller: cniccontroller,
-                  //   keyboardType: TextInputType.number,
-                  //   decoration: const InputDecoration(
-                  //     hintText: 'CNIC',
-                  //     icon: Icon(Icons.pages_rounded),
-                  //   ),
-                  //    validator: MultiValidator([
-                  //       RequiredValidator(errorText: 'Required'),
-                  //       PatternValidator(r'^[a-zA-z]+([\s][a-zA-Z]+)*$', errorText: 'Enter CNIC')
-                  //     ]),
-                  //   // validator: (value) {
-                  //   //   if (value!.isEmpty ||
-                  //   //       !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  //   //     return 'Enter CNIC';
-                  //   //   } else {
-                  //   //     return null;
-                  //   //   }
-                  //   // },
-                  // ),
+                  TextFormField(
+                    controller: namecontroller,
+                    keyboardType: TextInputType.text,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Owner Name',
+                      icon: Icon(Icons.person_outline),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
+                        return 'Enter Correct Owner Name';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    maxLength: 13,
+                    controller: cniccontroller,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintText: 'CNIC',
+                      icon: Icon(Icons.pages_rounded),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Enter Correct Owner Name';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
                   SizedBox(
                     height: 10,
                   ),
-                  // TextFormField(
-                  //   controller: mobilecontroller,
-                  //   keyboardType: TextInputType.number,
-                  //   maxLength: 11,
-                  //   decoration: const InputDecoration(
-                  //     hintText: 'Mobile Number',
-                  //     icon: Icon(Icons.mobile_friendly),
-                  //   ),
-                  //    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
-                  //   validator: (value) {
-                  //     if (value!.isEmpty ||
-                  //         !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                  //       return 'Enter Mobile Number';
-                  //     } else {
-                  //       return null;
-                  //     }
-                  //   },
-                  // ),
+
+                  TextFormField(
+                    controller: mobilecontroller,
+                    keyboardType: TextInputType.number,
+                    maxLength: 11,
+                    decoration: const InputDecoration(
+                      hintText: 'Mobile Number',
+                      icon: Icon(Icons.mobile_friendly),
+                    ),
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty ||
+                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                        return 'Enter Mobile Number';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+
                   SizedBox(
                     height: 15,
                   ),
                   Text(
-                    'NOC / LOP Approved Housing Societies of Islamabad',
+                    'Select one of the NOC / LOP Approved Housing Societies of Islamabad',
                     style: TextStyle(color: Colors.red),
                   ),
                   SizedBox(
                     height: 10,
                   ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DropdownButton<String>(
+                        value: dropdownValue1,
+                        icon: const Icon(Icons.arrow_downward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            dropdownValue1 = value!;
+                          });
+                        },
+                        items: socities_list
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                      SizedBox(
+                        width: 120,
+                      ),
+                      DropdownButton<String>(
+                        value: dropdownValue2,
+                        icon: const Icon(Icons.arrow_upward),
+                        elevation: 16,
+                        style: const TextStyle(color: Colors.deepPurple),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.deepPurpleAccent,
+                        ),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            dropdownValue2 = value!;
+                          });
+                        },
+                        items:
+                            list.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
                   //   children: const <Widget>[
@@ -391,14 +465,16 @@ class _UploadScreenState extends State<UploadScreen> {
                     controller: sizeplotcontroller,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: 'Plot Size : ',
+                      hintText: 'Plot Size : Kanal / Marla',
                       icon: Icon(Icons.landscape_outlined),
                     ),
-                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9]+$'))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[a-z 0-9]+$'))
+                    ],
                     validator: (value) {
                       if (value!.isEmpty ||
-                          !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                        return 'Enter Mobile Number';
+                          !RegExp(r'^[a-z 0-9]+$').hasMatch(value)) {
+                        return 'Enter Plot Size';
                       } else {
                         return null;
                       }
@@ -409,39 +485,19 @@ class _UploadScreenState extends State<UploadScreen> {
                     height: 20,
                   ),
                   TextFormField(
-                    maxLength: 4,
-                    controller: purposecontroller,
-                    keyboardType: TextInputType.text,
-                    decoration: const InputDecoration(
-                      hintText: 'Purpose : Sale / Rent',
-                      icon: Icon(Icons.tab_outlined),
-                    ),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
-                   validator: (value) {
-                      if (value!.isEmpty ||
-                          !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
-                        return 'Enter Mobile Number';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  //pricecontroller
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
                     maxLength: 10,
                     controller: pricecontroller,
                     keyboardType: TextInputType.text,
                     decoration: const InputDecoration(
-                      hintText: 'Price  : ',
+                      hintText: 'Price PKR : ',
                       icon: Icon(Icons.price_change_outlined),
                     ),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a0-z9]+$'))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[0-9 a-z]+$'))
+                    ],
                     validator: (value) {
                       if (value!.isEmpty ||
-                          !RegExp(r'^[a0-z9]+$').hasMatch(value)) {
+                          !RegExp(r'^[0-9 a-z]+$').hasMatch(value)) {
                         return 'Enter Price';
                       } else {
                         return null;
@@ -494,8 +550,10 @@ class _UploadScreenState extends State<UploadScreen> {
                       hintStyle: TextStyle(
                           color: Colors.grey, fontWeight: FontWeight.normal),
                     ),
-                     inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))],
-                     validator: (value) {
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))
+                    ],
+                    validator: (value) {
                       if (value!.isEmpty ||
                           !RegExp(r'^[a-z A-Z]+$').hasMatch(value)) {
                         return 'Enter Price';
@@ -512,114 +570,229 @@ class _UploadScreenState extends State<UploadScreen> {
               height: 10,
             ),
 
-            Text(
-              'Only Verified Properties will be Listed',
-              style: TextStyle(color: Colors.red),
-            ),
-
             const SizedBox(
               height: 15,
             ),
-
-            RoundButton(
-                title: 'Upload',
-                loading: loading,
-                onTap: () async {
-                  if (_formkey.currentState!.validate()) {
-                    setState(() {
-                      loading = true;
-                    });
-                  }
-
-                  //user ids are unique
-
-                  //storage mai imaes aay ge
-                  //    firebase_storage.Reference ref =
-                  //    firebase_storage.FirebaseStorage.instance.ref(
-                  //     '/allotmenletter/${DateTime.now().millisecondsSinceEpoch}');
-                  //  UploadTask uploadTask = ref.putFile(_Image!.absolute);
-                  //  await Future.value(uploadTask);
-
-                  //  var DocuImage = await ref.getDownloadURL();
-
-                  //     firestore.doc().set({
-                  //         'DocuImage': DocuImage.toString(),
-
-                  //     }).then((value) {
-                  //            setState(() {
-                  //     loading = false;
-                  //   });
-                  //       Utils().toastMessage('Application Submited');
-
-                  //     }).onError((error, stackTrace)  {
-                  //         Utils().toastMessage(error.toString());
-                  //              setState(() {
-                  //     loading = false;
-                  //   });
-                  //     });
-
-                  //firebase Real Time Data Base
-                  try {
-                    int id = DateTime.now().millisecondsSinceEpoch;
-
-                    firebase_storage.Reference ref = firebase_storage
-                        .FirebaseStorage.instance
-                        .ref('/UserReq/${id}');
-
-                    UploadTask uploadTask = ref.putFile(_Image!.absolute);
-                    await Future.value(uploadTask);
-                    var newUrl = await ref.getDownloadURL();
-
-                    final User? user = auth.currentUser;
-                    postRef
-                        .child('/UserVeriRequest/${id}')
-                        .set({
-                          //real time mai jaa k save ho ga
-
-                          'Image Url': newUrl.toString(),
-                          'Image id': id,
-                          'User Name': namecontroller.text.toString(),
-                          // 'CNIC': cniccontroller.text.toString(),
-                          'User Email': user!.email.toString(),
-                          'User ID': user.uid.toString(),
-                          // 'PLot File Number': plotcontroller.text.toString(),
-                          'Mobile Number': mobilecontroller.text.toString(),
-                          // 'Property details': pDcontroller.text.toString(),
-                          'Description': descricontroller.text.toString(),
-                          // 'Society Name': socitycontroller.text.toString(),
-                          'Purpose': purposecontroller.text.toString(),
-                          'Price': pricecontroller.text.toString(),
-                          'Plot Size': sizeplotcontroller.text.toString(),
-                          // 'DealerVeri': dealertcontroller.text.toString(),
-                        })
-                        .then((value) => {
-                              setState(() {
-                                loading = false;
-                              }),
-                              Utils().toastMessage('Application Submited')
-                            })
-                        .onError((error, stackTrace) => {
-                              Utils().toastMessage(error.toString()),
-                              setState(() {
-                                loading = false;
-                              }),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Checkbox(
+                          value: _isAcceptTermsAndConditions,
+                          onChanged: (value) {
+                            setState(() {
+                              // 2
+                              _isAcceptTermsAndConditions = value ?? false;
                             });
-                  } catch (e) {
-                    setState(() {
-                      loading = false;
-                    });
-                    Utils().toastMessage(e.toString());
-                  }
+                          }),
+                      Text(
+                        'Only Verified Properties will be listed',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 50,
+                    width: 150,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.deepPurple)),
+                      onPressed: _isAcceptTermsAndConditions
+                          ? () async {
+                              if (_formkey.currentState!.validate()) {
+                                setState(() {
+                                  Center(
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 3,
+                                      color: Colors.black,
+                                    ),
+                                  );
+                                
+                              
+                                });
+                              }
 
-                  //jaab submission ho jaay taab next screen mai jaay likn wait kry phely
+                              try {
+                                int id = DateTime.now().millisecondsSinceEpoch;
 
-                  Timer(const Duration(seconds: 3), () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DocuVerfiScreen()));
-                  });
-                }),
+                                firebase_storage.Reference ref =
+                                    firebase_storage.FirebaseStorage.instance
+                                        .ref('/UserReq/${id}');
+
+                                UploadTask uploadTask =
+                                    ref.putFile(_Image!.absolute);
+                                await Future.value(uploadTask);
+                                var newUrl = await ref.getDownloadURL();
+
+                                final User? user = auth.currentUser;
+                                postRef
+                                    .child('/UserVeriRequest/${id}')
+                                    .set({
+                                      //real time mai jaa k save ho ga
+
+                                      'Image Url': newUrl.toString(),
+                                      'Image id': id,
+                                      'User Name':
+                                          namecontroller.text.toString(),
+                                      'CNIC': cniccontroller.text.toString(),
+                                      'User Email': user!.email.toString(),
+                                      'User ID': user.uid.toString(),
+                                      // 'PLot File Number': plotcontroller.text.toString(),
+                                      'Mobile Number':
+                                          mobilecontroller.text.toString(),
+                                      // 'Property details': pDcontroller.text.toString(),
+                                      'Description':
+                                          descricontroller.text.toString(),
+                                      // 'Purpose': purposecontroller.text.toString(),
+                                      'Price': pricecontroller.text.toString(),
+                                      'Plot Size':
+                                          sizeplotcontroller.text.toString(),
+                                      'Housing Societies':
+                                          dropdownValue1.toString(),
+                                      'Sell Rent': dropdownValue2.toString(),
+                                    })
+                                    .then((value) => {
+                                          setState(() {
+                                            loading = false;
+                                          }),
+                                          Utils().toastMessage(
+                                              'Application Submited')
+                                        })
+                                    .onError((error, stackTrace) => {
+                                          Utils()
+                                              .toastMessage(error.toString()),
+                                          setState(() {
+                                            loading = false;
+                                          }),
+                                        });
+                              } catch (e) {
+                                setState(() {
+                                  loading = false;
+                                });
+                                Utils().toastMessage(e.toString());
+                              }
+
+                              //jaab submission ho jaay taab next screen mai jaay likn wait kry phely
+
+                              Timer(const Duration(seconds: 3), () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const DocuVerfiScreen()));
+                              });
+                            }
+                          : null,
+                      child: Text('Upload'),
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            // RoundButton(
+            //     title: 'Upload',
+            //     loading: loading,
+            //     onTap: () async {
+            //       if (_formkey.currentState!.validate()) {
+            //         setState(() {
+            //           loading = true;
+            //         });
+            //       }
+
+            //       //user ids are unique
+
+            //       //storage mai imaes aay ge
+            //       //    firebase_storage.Reference ref =
+            //       //    firebase_storage.FirebaseStorage.instance.ref(
+            //       //     '/allotmenletter/${DateTime.now().millisecondsSinceEpoch}');
+            //       //  UploadTask uploadTask = ref.putFile(_Image!.absolute);
+            //       //  await Future.value(uploadTask);
+
+            //       //  var DocuImage = await ref.getDownloadURL();
+
+            //       //     firestore.doc().set({
+            //       //         'DocuImage': DocuImage.toString(),
+
+            //       //     }).then((value) {
+            //       //            setState(() {
+            //       //     loading = false;
+            //       //   });
+            //       //       Utils().toastMessage('Application Submited');
+
+            //       //     }).onError((error, stackTrace)  {
+            //       //         Utils().toastMessage(error.toString());
+            //       //              setState(() {
+            //       //     loading = false;
+            //       //   });
+            //       //     });
+
+            //       //firebase Real Time Data Base
+            //       try {
+            //         int id = DateTime.now().millisecondsSinceEpoch;
+
+            //         firebase_storage.Reference ref = firebase_storage
+            //             .FirebaseStorage.instance
+            //             .ref('/UserReq/${id}');
+
+            //         UploadTask uploadTask = ref.putFile(_Image!.absolute);
+            //         await Future.value(uploadTask);
+            //         var newUrl = await ref.getDownloadURL();
+
+            //         final User? user = auth.currentUser;
+            //         postRef
+            //             .child('/UserVeriRequest/${id}')
+            //             .set({
+            //               //real time mai jaa k save ho ga
+
+            //               'Image Url': newUrl.toString(),
+            //               'Image id': id,
+            //               'User Name': namecontroller.text.toString(),
+            //               'CNIC': cniccontroller.text.toString(),
+            //               'User Email': user!.email.toString(),
+            //               'User ID': user.uid.toString(),
+            //               // 'PLot File Number': plotcontroller.text.toString(),
+            //               'Mobile Number': mobilecontroller.text.toString(),
+            //               // 'Property details': pDcontroller.text.toString(),
+            //               'Description': descricontroller.text.toString(),
+            //               // 'Purpose': purposecontroller.text.toString(),
+            //               'Price': pricecontroller.text.toString(),
+            //               'Plot Size': sizeplotcontroller.text.toString(),
+            //               'Housing Societies': dropdownValue1.toString(),
+            //               'Sell Rent': dropdownValue2.toString(),
+            //             })
+            //             .then((value) => {
+            //                   setState(() {
+            //                     loading = false;
+            //                   }),
+            //                   Utils().toastMessage('Application Submited')
+            //                 })
+            //             .onError((error, stackTrace) => {
+            //                   Utils().toastMessage(error.toString()),
+            //                   setState(() {
+            //                     loading = false;
+            //                   }),
+            //                 });
+            //       } catch (e) {
+            //         setState(() {
+            //           loading = false;
+            //         });
+            //         Utils().toastMessage(e.toString());
+            //       }
+
+            //       //jaab submission ho jaay taab next screen mai jaay likn wait kry phely
+
+            //       Timer(const Duration(seconds: 3), () {
+            //         Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //                 builder: (context) => const DocuVerfiScreen()));
+            //       });
+            //     }),
 
             SizedBox(
               height: 10,

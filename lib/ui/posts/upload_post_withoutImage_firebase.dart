@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -34,13 +33,8 @@ TextEditingController namecontroller = TextEditingController();
 TextEditingController cniccontroller = TextEditingController();
 TextEditingController mobilecontroller = TextEditingController();
 
-
-
-
-
 const List<String> list = <String>['Sale', 'Rent'];
 String dropdownValue = list.first;
-
 
 class _Form_No_imageState extends State<Form_No_image> {
   @override
@@ -148,27 +142,27 @@ class _Form_No_imageState extends State<Form_No_image> {
                   // ),
 
                   DropdownButton<String>(
-      value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
-      },
-      items: list.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    ),
+                    value: dropdownValue,
+                    icon: const Icon(Icons.arrow_downward),
+                    elevation: 16,
+                    style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                    onChanged: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        dropdownValue = value!;
+                      });
+                    },
+                    items: list.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                  ),
 
                   RoundButton(
                       title: 'Upload',
@@ -179,23 +173,18 @@ class _Form_No_imageState extends State<Form_No_image> {
                         });
 
                         //user ids are unique
-                         int id = DateTime.now().millisecondsSinceEpoch;
+                        int id = DateTime.now().millisecondsSinceEpoch;
 
-                        postRef .child('/UserVeriRequest/${id}')
-                        .set({
-
-                          'Owner Name' : namecontroller.text.toString(),
+                        postRef.child('/UserVeriRequest/${id}').set({
+                          'User Name': namecontroller.text.toString(),
                           'Mobile Number': mobilecontroller.text.toString(),
                           'DropdownValue': dropdownValue.toString(),
-
-
-
                         }).then((value) {
                           setState(() {
                             loading = false;
                           });
                           Utils().toastMessage(
-                              'Application Submited to our delar for verification');
+                              'Application Submited to for verification');
                         }).onError((error, stackTrace) {
                           Utils().toastMessage(error.toString());
                           setState(() {
