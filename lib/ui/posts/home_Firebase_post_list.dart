@@ -625,7 +625,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                         TextStyle(fontWeight: FontWeight.w700),
                                   ),
                                   Text(snapshot
-                                      .child('Society Name')
+                                      .child('Housing Societies')
                                       .value
                                       .toString()),
                                   SizedBox(

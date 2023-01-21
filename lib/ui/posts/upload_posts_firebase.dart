@@ -633,11 +633,10 @@ class _UploadScreenState extends State<UploadScreen> {
                                     .child('/UserVeriRequest/${id}')
                                     .set({
                                       //real time mai jaa k save ho ga
-
+                                      'id' : id,
                                       'Image Url': newUrl.toString(),
                                       'Image id': id,
-                                      'User Name':
-                                          namecontroller.text.toString(),
+                                      'User Name': namecontroller.text.toString(),
                                       'CNIC': cniccontroller.text.toString(),
                                       'User Email': user!.email.toString(),
                                       'User ID': user.uid.toString(),
