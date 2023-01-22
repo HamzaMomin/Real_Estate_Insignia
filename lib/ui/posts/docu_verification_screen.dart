@@ -157,7 +157,7 @@ final pickerDoc = ImagePicker();
                              setState(() {
                       loading = false;
                     });
-                        Utils().toastMessage('Application Submited to our delar for verification');
+                        Utils().toastMessage('Application Submited to our portal for verification');
 
                       }).onError((error, stackTrace)  {
                           Utils().toastMessage(error.toString());
