@@ -6,6 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:fyp/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -37,6 +38,13 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final firestore = FirebaseFirestore.instance.collection('Veri').snapshots();
+
+// void delete(id)
+// {
+//   final postRef = FirebaseDatabase.instance.ref().child('UserApplication');
+//   Fluttertoast.showToast(msg: 'Allotment Record Deleted!');
+// }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,58 +74,61 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                     icon: Icon(Icons.search),
                   ),
                   onChanged: (String value) {
-                    search = value;
-                  },
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Following is the list of Noc Societies in Islamabad',
-                  style: TextStyle(color: Colors.red),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                DropdownButton(
-                  items: _noc
-                      .map((value) => DropdownMenuItem(
-                            child: Text(
-                              value,
-                            ),
-                            value: value,
-                          ))
-                      .toList(),
-                  onChanged: (selectnoctype) {
                     setState(() {
-                      select = selectnoctype;
-                      validator:
-                      (value) {
-                        if (value!.isEmpty) {
-                          return 'Choose Options';
-                        }
-                        return null;
-                      };
+                      search = value;
                     });
-                  },
-                  value: select,
-                  isExpanded: false,
-                  hint: Text('Choose one Housing Socity'),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  maxLength: 15,
-                  controller: searchcontroller2,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                      hintText: 'Search by Plot Size',
-                      icon: Icon(Icons.send_and_archive)),
-                  onChanged: (String value) {
-                    search = value;
+                    
                   },
                 ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // Text(
+                //   'Following is the list of Noc Societies in Islamabad',
+                //   style: TextStyle(color: Colors.red),
+                // ),
+                // SizedBox(
+                //   height: 5,
+                // ),
+                // DropdownButton(
+                //   items: _noc
+                //       .map((value) => DropdownMenuItem(
+                //             child: Text(
+                //               value,
+                //             ),
+                //             value: value,
+                //           ))
+                //       .toList(),
+                //   onChanged: (selectnoctype) {
+                //     setState(() {
+                //       select = selectnoctype;
+                //       validator:
+                //       (value) {
+                //         if (value!.isEmpty) {
+                //           return 'Choose Options';
+                //         }
+                //         return null;
+                //       };
+                //     });
+                //   },
+                //   value: select,
+                //   isExpanded: false,
+                //   hint: Text('Choose one Housing Socity'),
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // TextFormField(
+                //   maxLength: 15,
+                //   controller: searchcontroller2,
+                //   keyboardType: TextInputType.text,
+                //   decoration: const InputDecoration(
+                //       hintText: 'Search by Plot Size',
+                //       icon: Icon(Icons.send_and_archive)),
+                //   onChanged: (String value) {
+                //     search = value;
+                //   },
+                // ),
               ],
             ),
           ),
@@ -144,6 +155,24 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  // PopupMenuButton(
+                                  //     icon: Icon(Icons.more_vert),
+                                  //     itemBuilder: (context) => [
+                                  //           PopupMenuItem(
+                                  //             onTap: () async{
+                                  //               delete(snapshot.child('UserVeriRequest'));
+                                  //             },
+                                  //             value: 1,
+                                  //             child: ListTile(
+                                  //                 leading: Icon(Icons.delete,size: 20,color: Colors.red,),
+                                  //                 title: Text('Delete')),
+                                  //           )
+                                  //         ]),
+                                ],
+                              ),
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: FadeInImage.assetNetwork(
@@ -244,7 +273,7 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                                         TextStyle(fontWeight: FontWeight.w700),
                                   ),
                                   Text(snapshot
-                                      .child('Society Name')
+                                      .child('Housing Societies')
                                       .value
                                       .toString()),
                                   SizedBox(
@@ -288,13 +317,13 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text('Property details : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                              Text(snapshot
-                                  .child('Property details')
-                                  .value
-                                  .toString()),
+                              // const Text('Property details : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
+                              // Text(snapshot
+                              //     .child('Property details')
+                              //     .value
+                              //     .toString()),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -482,13 +511,13 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text('Property details : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                              Text(snapshot
-                                  .child('Property details')
-                                  .value
-                                  .toString()),
+                              // const Text('Property details : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
+                              // Text(snapshot
+                              //     .child('Property details')
+                              //     .value
+                              //     .toString()),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -669,13 +698,13 @@ class _HomeScreenState extends State<HomeScreenFirebase> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Text('Property details : ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.w700)),
-                              Text(snapshot
-                                  .child('Property details')
-                                  .value
-                                  .toString()),
+                              // const Text('Property details : ',
+                              //     style:
+                              //         TextStyle(fontWeight: FontWeight.w700)),
+                              // Text(snapshot
+                              //     .child('Property details')
+                              //     .value
+                              //     .toString()),
                               const SizedBox(
                                 height: 10,
                               ),

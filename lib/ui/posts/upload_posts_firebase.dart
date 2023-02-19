@@ -33,13 +33,14 @@ class _UploadScreenState extends State<UploadScreen> {
   TextEditingController pricecontroller = TextEditingController();
   TextEditingController sizeplotcontroller = TextEditingController();
 
-  static const List<String> socities_list = <String>[
+ 
+  static const List<String> socities = <String>[
     'NAVAL ANCHORAGE',
     'BAHRIA TOWN',
     'DHA',
     'JINNAH',
   ];
-  String dropdownValue1 = socities_list.first;
+  String dropdownValue1 = socities.first;
 
   static const List<String> list = <String>['Sell', 'Rent'];
   String dropdownValue2 = list.first;
@@ -234,11 +235,11 @@ class _UploadScreenState extends State<UploadScreen> {
             SizedBox(
               height: 10,
             ),
-            Center(
-                child: Text(
-              'Property Details',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
-            )),
+            // Center(
+            //     child: Text(
+            //   'Property Details',
+            //   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+            // )),
             SizedBox(
               height: 20,
             ),
@@ -333,6 +334,7 @@ class _UploadScreenState extends State<UploadScreen> {
                     children: [
                       DropdownButton<String>(
                         value: dropdownValue1,
+                        
                         icon: const Icon(Icons.arrow_downward),
                         elevation: 16,
                         style: const TextStyle(color: Colors.deepPurple),
@@ -346,7 +348,7 @@ class _UploadScreenState extends State<UploadScreen> {
                             dropdownValue1 = value!;
                           });
                         },
-                        items: socities_list
+                        items: socities
                             .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
@@ -551,7 +553,7 @@ class _UploadScreenState extends State<UploadScreen> {
                           color: Colors.grey, fontWeight: FontWeight.normal),
                     ),
                     inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp(r'^[a-z A-Z]+$'))
+                      FilteringTextInputFormatter.allow(RegExp(r'^[A-z 0-9]+$'))
                     ],
                     validator: (value) {
                       if (value!.isEmpty ||
@@ -677,13 +679,13 @@ class _UploadScreenState extends State<UploadScreen> {
 
                               //jaab submission ho jaay taab next screen mai jaay likn wait kry phely
 
-                              Timer(const Duration(seconds: 3), () {
+                              
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const DocuVerfiScreen()));
-                              });
+                              
                             }
                           : null,
                       child: Text('Upload'),
