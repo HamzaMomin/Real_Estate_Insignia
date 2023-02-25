@@ -7,7 +7,8 @@ BS CS
 Hamza Momin 
 Reg(70070802)
 
-<img src="![APP GIF](https://user-images.githubusercontent.com/65024078/221367111-713352bc-7caa-4f1f-8b56-60045cd1c302.gif)" width="250" height="250"/>
+![APP GIF](https://user-images.githubusercontent.com/65024078/221367160-35d68ca7-fcf2-47f9-b2a6-443b60f7cede.gif)
+
 
 "Real Estate Insignia"
 
